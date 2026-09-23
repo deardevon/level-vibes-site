@@ -38,6 +38,15 @@
     </style>
     <script>
       if ('serviceWorker' in navigator) {
+        // When an updated service worker takes over, reload once to show the new version
+        var hadController = !!navigator.serviceWorker.controller;
+        var reloaded = false;
+        navigator.serviceWorker.addEventListener('controllerchange', function () {
+          if (hadController && !reloaded) {
+            reloaded = true;
+            location.reload();
+          }
+        });
         addEventListener('load', function () {
           navigator.serviceWorker.register('/level-vibes-site/sw.js', { scope: '/level-vibes-site/' });
         });
