@@ -4,8 +4,8 @@
   "start_url": "/level-vibes-site/",
   "scope": "/level-vibes-site/",
   "display": "standalone",
-  "background_color": "#EDEAE2",
-  "theme_color": "#EDEAE2",
+  "background_color": "#222624",
+  "theme_color": "#222624",
   "icons": [
     { "src": "/level-vibes-site/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/level-vibes-site/icon-512.png", "sizes": "512x512", "type": "image/png" }
