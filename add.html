@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>A list for you · Level Vibes</title>
+  <meta name="description" content="Someone shared a Level Vibes list with you." />
+  <link rel="icon" href="./apple-touch-icon.png" />
+  <meta property="og:title" content="A list for you on Level Vibes" />
+  <meta property="og:description" content="Tap to add it to your Level Vibes. Meet yourself where you are." />
+  <meta property="og:image" content="https://deardevon.github.io/level-vibes-site/home/share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#F1EEE9" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#222624" media="(prefers-color-scheme: dark)" />
+  <style>
+    @font-face { font-family: BC; font-weight: 300; font-display: swap; src: url(./fonts/BarlowCondensed_300Light.ttf); }
+    @font-face { font-family: BC; font-weight: 400; font-display: swap; src: url(./fonts/BarlowCondensed_400Regular.ttf); }
+    @font-face { font-family: BC; font-weight: 500; font-display: swap; src: url(./fonts/BarlowCondensed_500Medium.ttf); }
+    :root {
+      --paper: #F1EEE9; --paper2: #E6E2DB; --ink: #222624; --soft: #5E6560; --line: #CDC8BF;
+      --l1: #3E8A6E; --l2: #F0BF2A; --l3: #FF5A5A; --t1: #2E7358; --t2: #82640E; --t3: #BB3B3B;
+      --on-level: #141715; --logo: #D63F3F; --btn-bg: #222624; --btn-ink: #F1EEE9;
+      color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #222624; --paper2: #2B302D; --ink: #F0EDE8; --soft: #A7ADA9; --line: #474D49;
+        --t1: #5DBB93; --t2: #F0BF2A; --t3: #FF6B6B; --logo: #FF6B6B; --btn-bg: #F0EDE8; --btn-ink: #222624;
+        color-scheme: dark;
+      }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 400 19px/1.5 BC, "Arial Narrow", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    main { max-width: 560px; margin: 0 auto; padding-inline: 22px; padding-block: calc(env(safe-area-inset-top, 0px) + 40px) calc(env(safe-area-inset-bottom, 0px) + 40px); display: grid; gap: 18px; }
+    .logo { width: 150px; aspect-ratio: 3510 / 1521; background: var(--logo); -webkit-mask: url(./home/logo.svg) center / contain no-repeat; mask: url(./home/logo.svg) center / contain no-repeat; }
+    .kicker { color: var(--soft); margin: 0; }
+    h1 { font-weight: 300; font-size: clamp(44px, 11vw, 64px); line-height: 1; margin: 0; }
+    .levels { display: grid; gap: 12px; }
+    .level { border: 1.5px solid var(--line); border-radius: 16px; padding: 14px 16px; background: var(--paper2); }
+    .level h2 { margin: 0 0 6px; font-weight: 500; font-size: 20px; display: flex; align-items: center; gap: 10px; }
+    .level h2 i { width: 14px; height: 14px; border-radius: 4px; flex: none; }
+    .level h2 span { font-weight: 400; color: var(--soft); font-size: 17px; }
+    .level ul { margin: 0; padding-left: 20px; }
+    .level li { line-height: 1.35; }
+    .empty { color: var(--soft); margin: 0; }
+    .ctas { display: grid; gap: 10px; }
+    .btn { display: flex; justify-content: center; align-items: center; min-height: 52px; padding: 12px 20px; border-radius: 12px; border: 1.5px solid var(--ink); font-size: 21px; text-decoration: none; color: inherit; text-align: center; }
+    .btn.primary { background: var(--btn-bg); color: var(--btn-ink); border-color: var(--btn-bg); }
+    .btn:focus-visible { outline: 3px solid var(--l1); outline-offset: 3px; }
+    .note { color: var(--soft); font-size: 16px; margin: 0; }
+    footer { color: var(--soft); font-size: 16px; }
+    footer a { color: inherit; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="logo" role="img" aria-label="Level Vibes logo"></div>
+
+    <section id="list" hidden>
+      <p class="kicker">Someone shared a list with you</p>
+      <h1 id="name"></h1>
+    </section>
+    <div class="levels" id="levels" hidden></div>
+
+    <div class="ctas" id="ctas" hidden>
+      <a class="btn primary" id="open-app" href="#">Add it in the Level Vibes app</a>
+      <a class="btn" id="open-web" href="./">Add it in the web version</a>
+      <a class="btn" href="https://apps.apple.com/app/id6815524811">Get Level Vibes on the App Store</a>
+      <p class="note">Don’t have the app yet? Get it first, then come back and tap “Add it in the Level Vibes app”.</p>
+    </div>
+
+    <section id="missing" hidden>
+      <h1>This link is missing its list</h1>
+      <p class="note">It may have been cut off when it was copied. Ask for the link again, or get Level Vibes and make your own.</p>
+      <p><a class="btn" href="./home.html">About Level Vibes</a></p>
+    </section>
+
+    <footer><a href="./home.html">Level Vibes</a> · Meet yourself where you are.</footer>
+  </main>
+
+  <script>
+    (function () {
+      var LEVELS = [1, 2, 3];
+      var raw = location.hash.slice(1);
+      var data = null;
+      try { data = JSON.parse(decodeURIComponent(raw)); } catch (e) { data = null; }
+      var ok = data && typeof data.n === 'string' && Array.isArray(data.l) && data.l.length === 3;
+      if (!ok) { document.getElementById('missing').hidden = false; return; }
+
+      document.title = data.n + ' · Level Vibes';
+      document.getElementById('name').textContent = data.n;
+      var levels = document.getElementById('levels');
+      LEVELS.forEach(function (n, i) {
+        var lv = data.l[i] || [];
+        var items = Array.isArray(lv[2]) ? lv[2] : [];
+        var box = document.createElement('div');
+        box.className = 'level';
+        var h = document.createElement('h2');
+        var dot = document.createElement('i');
+        dot.style.background = 'var(--l' + n + ')';
+        h.appendChild(dot);
+        h.appendChild(document.createTextNode('Level ' + n + ' '));
+        if (lv[0]) {
+          var d = document.createElement('span');
+          d.textContent = lv[0];
+          h.appendChild(d);
+        }
+        box.appendChild(h);
+        if (items.length) {
+          var ul = document.createElement('ul');
+          items.forEach(function (it) { var li = document.createElement('li'); li.textContent = it; ul.appendChild(li); });
+          box.appendChild(ul);
+        } else {
+          var p = document.createElement('p');
+          p.className = 'empty';
+          p.textContent = 'Nothing here yet';
+          box.appendChild(p);
+        }
+        levels.appendChild(box);
+      });
+
+      // The same list, handed to the app or to the web version
+      var json = encodeURIComponent(decodeURIComponent(raw));
+      document.getElementById('open-app').href = 'levelvibes://add?d=' + json;
+      document.getElementById('open-web').href = './#add=' + json;
+      ['list', 'levels', 'ctas'].forEach(function (id) { document.getElementById(id).hidden = false; });
+    })();
+  </script>
+</body>
+</html>
