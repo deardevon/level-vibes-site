@@ -37,6 +37,17 @@
       @media (prefers-color-scheme: dark) { html, body { background: #222624; } }
     </style>
     <script>
+      // First-time visitors in a browser see the home page; anyone who has used the web app, opened
+      // it from their home screen, or tapped "Try it in your browser" (?app) goes straight in
+      (function () {
+        try {
+          var search = location.search;
+          if (/[?&]app(=|&|$)/.test(search)) { localStorage.setItem('level-vibes-open-app', '1'); return; }
+          var installed = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+          var used = ['level-vibes-v2', 'level-vibes-welcomed', 'chore-chooser-v1', 'level-vibes-open-app'].some(function (k) { return localStorage.getItem(k) != null; });
+          if (!installed && !used && location.pathname === '/') location.replace('/home.html' + search);
+        } catch (e) {}
+      })();
       if ('serviceWorker' in navigator) {
         // When an updated service worker takes over, reload once to show the new version
         var hadController = !!navigator.serviceWorker.controller;
