@@ -265,5 +265,15 @@
       <a href="./?app">Open the web app</a>
     </nav>
   </footer>
+  <script>
+    // Ads link here with ?ct=campaign-name (Meta won't take App Store links in website ads);
+    // pass the name on to the App Store button so App Store Connect credits the download
+    (function () {
+      var ct = new URLSearchParams(location.search).get('ct');
+      if (!ct || !/^[\w-]{1,40}$/.test(ct)) return;
+      var url = 'https://apps.apple.com/app/apple-store/id6815524811?pt=129506743&ct=' + ct + '&mt=8';
+      document.querySelectorAll('a[href^="https://apps.apple.com/"]').forEach(function (a) { a.href = url; });
+    })();
+  </script>
 </body>
 </html>
